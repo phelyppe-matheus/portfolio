@@ -1,0 +1,110 @@
+/*
+Orbit by Phelyppe Matheus
+Free stuff, but I'd like a shoutout nonetheless
+Have a nice day
+*/
+
+$orbit_size: 25rem;
+
+$center_size: 10rem;
+$float_item_size: 5rem;
+
+$duration_orbit: 5s;
+
+$floating_list_len: 6;
+
+.orbit-animation {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    height: min(100vh, 60rem);
+
+    .orbit {
+        height: $orbit_size;
+        aspect-ratio: 1/1;
+
+        .image-center {
+            transform: translate(calc($orbit_size/2 - $center_size/2),
+                    calc($orbit_size/2 - $center_size/2));
+
+            .user {
+                position: absolute;
+                height: $center_size;
+                aspect-ratio: 1 / 1;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+
+            .user:nth-child(2) {
+                filter: opacity(1);
+                transition: filter 500ms ease-in;
+            }
+
+            .user:nth-child(2):hover {
+                filter: opacity(0);
+            }
+        }
+
+        .floating-list {
+            .floating-item {
+                background-color: aliceblue;
+                position: absolute;
+                padding: $float_item_size*0.3;
+                width: $float_item_size;
+                display: grid;
+                place-items: center;
+                aspect-ratio: 1 / 1;
+                border-radius: 50%;
+
+                @for $count from 1 to $floating_list_len+1 {
+                    &:nth-child(#{$count}) {
+                        animation: orbit-horizontal $duration_orbit ease-in-out $count*$duration_orbit/$floating_list_len infinite,
+                            orbit-vertical $duration_orbit ease-in-out $count*$duration_orbit/$floating_list_len+$duration_orbit/4 infinite;
+                    }
+                }
+
+                .description {
+                    display: none;
+                    font-size: $float_item_size*0.1;
+                    font-family: 'Cinzel', serif;
+                    font-weight: bold;
+                    text-align: center;
+                }
+
+                transition: animatio-play-state 2s ease-in;
+
+                &:hover {
+                    background-color: aqua;
+                    padding: 0;
+
+                    .item {
+                        display: none;
+                    }
+
+                    .description {
+                        display: block;
+                    }
+                }
+            }
+
+            &:hover {
+                .floating-item {
+                    animation-play-state: paused;
+                }
+            }
+        }
+    }
+}
+
+@keyframes orbit-horizontal {
+    50% {
+        margin-left: $orbit_size - $float_item_size;
+    }
+}
+
+
+@keyframes orbit-vertical {
+    50% {
+        margin-top: $orbit_size - $float_item_size;
+    }
+}
