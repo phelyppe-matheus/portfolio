@@ -9,11 +9,12 @@ $orbit_size: 25rem;
 $center_size: 10rem;
 $float_item_size: 5rem;
 
-$duration_orbit: 5s;
+$duration_orbit: 10s;
 
 $floating_list_len: 6;
 
 .orbit-animation {
+    background: linear-gradient(45deg, blueviolet, blue);
     overflow: hidden;
     display: grid;
     place-items: center;
@@ -55,45 +56,63 @@ $floating_list_len: 6;
                 place-items: center;
                 aspect-ratio: 1 / 1;
                 border-radius: 50%;
+                transition:
+                    transform 100ms,
+                    box-shadow 400ms;
 
                 @for $count from 1 to $floating_list_len+1 {
                     &:nth-child(#{$count}) {
-                        animation: orbit-horizontal $duration_orbit ease-in-out $count*$duration_orbit/$floating_list_len infinite,
-                            orbit-vertical $duration_orbit ease-in-out $count*$duration_orbit/$floating_list_len+$duration_orbit/4 infinite;
-                    }
-                }
+                        $entry_delay: $count*$duration_orbit/$floating_list_len;
+                        $color: --#{nth(green blue orange purple yellow brown red pink white, $count)
 
-                .description {
-                    display: none;
-                    font-size: $float_item_size*0.1;
-                    font-family: 'Cinzel', serif;
-                    font-weight: bold;
-                    text-align: center;
-                }
-
-                transition: animatio-play-state 2s ease-in;
-
-                &:hover {
-                    background-color: aqua;
-                    padding: 0;
-
-                    .item {
-                        display: none;
                     }
 
-                    .description {
-                        display: block;
+                    ;
+
+                    animation: orbit-horizontal $duration_orbit ease-in-out $entry_delay infinite,
+                    orbit-vertical $duration_orbit ease-in-out $entry_delay+$duration_orbit/4 infinite;
+
+                    &:hover {
+                        background-color: var(#{$color}-dark);
+                        color: var(#{$color}-light);
+
+                        box-shadow: inset 4px 4px 4px var(#{$color}-light),
+                        inset -4px -4px 4px #00000077,
+                        4px 4px 15px #00000077;
                     }
                 }
+            }
+
+            .description {
+                display: none;
+                font-size: $float_item_size*0.1;
+                font-family: 'Fauna One', serif;
+                font-weight: bold;
+                text-align: center;
             }
 
             &:hover {
-                .floating-item {
-                    animation-play-state: paused;
+                background-color: aqua;
+                padding: $float_item_size*0.1;
+                transform: scale(1.5);
+
+                .item {
+                    display: none;
+                }
+
+                .description {
+                    display: block;
                 }
             }
         }
+
+        &:hover {
+            .floating-item {
+                animation-play-state: paused;
+            }
+        }
     }
+}
 }
 
 @keyframes orbit-horizontal {
