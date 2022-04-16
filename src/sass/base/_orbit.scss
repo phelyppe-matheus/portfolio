@@ -17,11 +17,11 @@ $floating_list_len: 6;
 
 .orbit-section {
     background: linear-gradient(45deg, blueviolet, blue);
-    overflow: hidden;
     display: grid;
     place-items: center;
     height: min(100vh, 60rem);
     overflow: hidden;
+    position: relative;
 
     .orbit {
         height: $orbit_size;
@@ -72,7 +72,7 @@ $floating_list_len: 6;
                     animation: orbit-horizontal $duration_orbit ease-in-out $entry_delay infinite,
                     orbit-vertical $duration_orbit ease-in-out $entry_delay+math.div($duration_orbit, 4) infinite;
 
-                    &:hover {
+                    &:hover, &:focus {
                         background-color: var(#{$color}-dark);
                         color: var(#{$color}-light);
 
@@ -91,7 +91,7 @@ $floating_list_len: 6;
                 text-align: center;
             }
 
-            &:hover {
+            &:hover, &:focus {
                 background-color: aqua;
                 padding: $float_item_size*0.1;
                 transform: scale(1.5);
@@ -130,13 +130,13 @@ $floating_list_len: 6;
 
 @media screen and (max-width: #{$orbit_size*1.5}) {
     .orbit-section {
-        .orbit {
-            position: absolute;
-            right: (calc($orbit_size/2) - calc($center_size/2)) * -1;
+        justify-content: start;
 
+        .orbit {
+            margin: math.div($orbit_size - $center_size, -2);
             .image-center {
                 .user {
-                    border-radius: 50% 0 0 50%;
+                    border-radius: 0 50% 50% 0;
                 }
             }
         }
