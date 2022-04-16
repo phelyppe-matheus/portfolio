@@ -21,6 +21,7 @@ $floating_list_len: 6;
     display: grid;
     place-items: center;
     height: min(100vh, 60rem);
+    overflow: hidden;
 
     .orbit {
         height: $orbit_size;
