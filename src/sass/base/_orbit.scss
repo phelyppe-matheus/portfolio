@@ -4,6 +4,8 @@ Free stuff, but I'd like a shoutout nonetheless
 Have a nice day
 */
 
+@use "sass:math";
+
 $orbit_size: 25rem;
 
 $center_size: 10rem;
@@ -13,7 +15,7 @@ $duration_orbit: 10s;
 
 $floating_list_len: 6;
 
-.orbit-animation {
+.orbit-section {
     background: linear-gradient(45deg, blueviolet, blue);
     overflow: hidden;
     display: grid;
@@ -62,12 +64,12 @@ $floating_list_len: 6;
 
                 @for $count from $floating_list_len to 0 {
                     &:nth-child(#{$count}) {
-                        $entry_delay: ($floating_list_len - $count)*$duration_orbit/$floating_list_len;
+                        $entry_delay: ($floating_list_len - $count)*math.div($duration_orbit, $floating_list_len);
                         $color: --#{nth(green blue orange purple yellow brown red pink white, $count)
                     };
 
                     animation: orbit-horizontal $duration_orbit ease-in-out $entry_delay infinite,
-                    orbit-vertical $duration_orbit ease-in-out $entry_delay+$duration_orbit/4 infinite;
+                    orbit-vertical $duration_orbit ease-in-out $entry_delay+math.div($duration_orbit, 4) infinite;
 
                     &:hover {
                         background-color: var(#{$color}-dark);
