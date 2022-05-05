@@ -16,12 +16,71 @@ $duration_orbit: 10s;
 $floating_list_len: 6;
 
 .orbit-section {
-    background: linear-gradient(45deg, blueviolet, blue);
-    display: grid;
-    place-items: center;
-    height: min(100vh, 60rem);
+    background: var(--violet-to-blue);
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 4rem;
+
     overflow: hidden;
     position: relative;
+    padding: 4rem;
+
+    .about {
+        background-color: var(--on-violet-to-blue);
+        padding: 3rem;
+        border-radius: 2rem;
+        max-width: 2*$orbit_size;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        .title {
+            color: var(--blue-dark);
+            font-family: 'Cinzel', serif;
+            font-weight: 400;
+            font-size: 2.6em;
+        }
+
+        .subtitle {
+            margin-top: -0.5rem;
+
+            color: var(--blue-dark);
+            font-family: 'Cinzel', serif;
+            font-size: 1.6em;
+            font-weight: 700;
+        }
+
+        .text {
+            margin-top: 1rem;
+
+            font-family: 'Fauna One';
+            font-size: 1em;
+
+            a {
+                background: var(--violet-to-blue);
+                color: var(--on-violet-to-blue);
+
+                padding: 0rem 0.3rem 0.2rem;
+                margin: 0 0.3rem;
+
+                border-radius: 1rem;
+                text-decoration: none;
+            }
+
+            a:visited {
+                color: #bbb;
+            }
+
+            a:active {
+                background: var(--blue-light);
+            }
+        }
+    }
+
 
     .orbit {
         height: $orbit_size;
@@ -51,7 +110,7 @@ $floating_list_len: 6;
 
         .floating-list {
             .floating-item {
-                background-color: aliceblue;
+                background-color: var(--on-violet-to-blue);
                 position: absolute;
                 padding: $float_item_size*0.3;
                 width: $float_item_size;
@@ -66,53 +125,56 @@ $floating_list_len: 6;
                 @for $count from $floating_list_len to 0 {
                     &:nth-child(#{$count}) {
                         $entry_delay: ($floating_list_len - $count)*math.div($duration_orbit, $floating_list_len);
-                        $color: --#{nth(green blue orange purple yellow brown red pink white, $count)
-                    };
+                        $color: --#{nth(green blue orange purple yellow brown red pink white, $count)};
 
-                    animation: orbit-horizontal $duration_orbit ease-in-out $entry_delay infinite,
-                    orbit-vertical $duration_orbit ease-in-out $entry_delay+math.div($duration_orbit, 4) infinite;
+                        animation: orbit-horizontal $duration_orbit ease-in-out $entry_delay infinite,
+                            orbit-vertical $duration_orbit ease-in-out $entry_delay+math.div($duration_orbit, 4) infinite;
 
-                    &:hover, &:focus {
-                        background-color: var(#{$color}-dark);
-                        color: var(#{$color}-light);
+                        &:hover,
+                        &:focus {
+                            background-color: var(#{$color}-dark);
+                            color: var(#{$color}-light);
 
-                        box-shadow: inset 4px 4px 4px var(#{$color}-light),
-                        inset -4px -4px 4px #00000077,
-                        4px 4px 15px #00000077;
+                            box-shadow: inset 4px 4px 4px var(#{$color}-light),
+                            inset -4px -4px 4px #00000077,
+                            4px 4px 15px #00000077;
+                        }
+                    }
+                }
+
+                .description {
+                    display: none;
+                    font-size: $float_item_size*0.1;
+                    font-family: 'Fauna One', serif;
+                    font-weight: bold;
+                    text-align: center;
+                }
+
+                &:hover,
+                &:focus {
+                    background-color: aqua;
+                    padding: $float_item_size*0.1;
+                    transform: scale(1.5);
+
+                    .item {
+                        display: none;
+                    }
+
+                    .description {
+                        display: block;
                     }
                 }
             }
 
-            .description {
-                display: none;
-                font-size: $float_item_size*0.1;
-                font-family: 'Fauna One', serif;
-                font-weight: bold;
-                text-align: center;
-            }
-
-            &:hover, &:focus {
-                background-color: aqua;
-                padding: $float_item_size*0.1;
-                transform: scale(1.5);
-
-                .item {
-                    display: none;
+            &:hover {
+                .floating-item {
+                    animation-play-state: paused;
                 }
-
-                .description {
-                    display: block;
-                }
-            }
-        }
-
-        &:hover {
-            .floating-item {
-                animation-play-state: paused;
             }
         }
     }
-}
+
+
 }
 
 @keyframes orbit-horizontal {
@@ -129,16 +191,30 @@ $floating_list_len: 6;
 }
 
 @media screen and (max-width: #{$orbit_size*1.5}) {
+    $small_padding: 2rem;
     .orbit-section {
-        justify-content: start;
+        padding: $small_padding;
+        justify-content: flex-start;
 
         .orbit {
-            margin: math.div($orbit_size - $center_size, -2);
+            margin-left: math.div($orbit_size - $center_size, -2) - $small_padding;
+            place-self: start;
+
             .image-center {
                 .user {
                     border-radius: 0 50% 50% 0;
                 }
             }
+        }
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .orbit-section {
+        .about {
+            border-radius: 4rem 0 0 4rem;
+
+            text-align: right;
         }
     }
 }
