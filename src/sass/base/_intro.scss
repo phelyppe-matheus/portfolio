@@ -1,0 +1,94 @@
+@use 'sass:math';
+
+$pixel_art_forest_folder: "/assets/pixel_art_forest";
+$pixe_art_aspect_ratio: math.div(928, 793);
+$cover_size: 135vh;
+
+@function generateTransition($num_transition) {
+    @return runningThroughTheForest #{math.div(120, $num_transition)}s linear infinite,
+    clearFog 2s ease-out;
+}
+
+.intro {
+    height: 100vh;
+
+    .forest {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-position-y: bottom;
+        background-repeat: repeat no-repeat;
+        background-size: auto $cover_size;
+        background-attachment: fixed;
+
+        &.shadow:nth-child(1) {
+            animation: generateTransition(1);
+
+            background-image: url("#{$pixel_art_forest_folder}/Layer_0009_2.png");
+        }
+
+        &.shadow:nth-child(2) {
+            animation: generateTransition(2);
+
+            background-image: url("#{$pixel_art_forest_folder}/Layer_0008_3.png");
+        }
+
+        &.shadow:nth-child(3) {
+            animation: generateTransition(3);
+
+            background-image: url("#{$pixel_art_forest_folder}/Layer_0006_4.png"),
+            url("#{$pixel_art_forest_folder}/Layer_0007_Lights.png");
+        }
+
+        &.trees {
+            animation: generateTransition(4);
+
+            background-image: url("#{$pixel_art_forest_folder}/Layer_0002_7.png"),
+            url("#{$pixel_art_forest_folder}/Layer_0003_6.png"),
+            url("#{$pixel_art_forest_folder}/Layer_0004_Lights.png"),
+            url("#{$pixel_art_forest_folder}/Layer_0005_5.png");
+        }
+
+        &.floor {
+            animation: generateTransition(5);
+
+            background-image: url("#{$pixel_art_forest_folder}/Layer_0000_9.png"),
+            url("#{$pixel_art_forest_folder}/Layer_0001_8.png");
+        }
+
+        &.shoutout {
+            height: fit-content;
+            width: fit-content;
+            position: absolute;
+            right: 50px;
+            bottom: 50px;
+
+            a {
+                color: white;
+                text-decoration: none;
+
+                font-family: 'Cinzel', serif;
+                font-weight: bold;
+
+            }
+        }
+    }
+}
+
+@keyframes runningThroughTheForest {
+    from {
+        background-position-x: 0%;
+    }
+    to {
+        background-position-x: $pixe_art_aspect_ratio*$cover_size;
+    }
+}
+
+@keyframes clearFog {
+    from {
+        box-shadow: 0px 0px 12in #fff inset;
+    }
+    to {
+        box-shadow: 0px 0px 0px #fff0 inset;
+    }
+}
