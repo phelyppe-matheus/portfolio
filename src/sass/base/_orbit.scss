@@ -11,26 +11,27 @@ $orbit_size: 25rem;
 $center_size: 10rem;
 $float_item_size: 5rem;
 
-$duration_orbit: 10s;
+$duration_orbit: 15s;
 
 $floating_list_len: 6;
 
 .orbit-section {
     background: var(--violet-to-blue);
 
+    height: #{math.sqrt(math.pow(math.div($orbit_size, 1rem), 2)*2)+10}rem;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 
     gap: 4rem;
 
-    overflow: hidden;
     position: relative;
     padding: 4rem;
 
     .about {
-        background-color: var(--on-violet-to-blue);
         padding: 3rem;
         border-radius: 2rem;
         max-width: 2*$orbit_size;
@@ -38,8 +39,10 @@ $floating_list_len: 6;
         flex-direction: column;
         justify-content: center;
 
+        text-align: center;
+
         .title {
-            color: var(--blue-dark);
+            color: var(--on-violet-to-blue);
             font-family: 'Cinzel', serif;
             font-weight: 400;
             font-size: 2.6em;
@@ -48,7 +51,7 @@ $floating_list_len: 6;
         .subtitle {
             margin-top: -0.5rem;
 
-            color: var(--blue-dark);
+            color: var(--on-violet-to-blue);
             font-family: 'Cinzel', serif;
             font-size: 1.6em;
             font-weight: 700;
@@ -59,12 +62,14 @@ $floating_list_len: 6;
 
             font-family: 'Fauna One';
             font-size: 1em;
+            color: var(--on-violet-to-blue);
 
             a {
-                background: var(--violet-to-blue);
-                color: var(--on-violet-to-blue);
+                color: blue;
+                background-color: var(--on-violet-to-blue);
+                font-weight: bold;
 
-                padding: 0rem 0.3rem 0.2rem;
+                padding: 0rem 0.6rem 0.2rem;
                 margin: 0 0.3rem;
 
                 border-radius: 1rem;
@@ -72,7 +77,7 @@ $floating_list_len: 6;
             }
 
             a:visited {
-                color: #bbb;
+                color: blueviolet;
             }
 
             a:active {
@@ -83,24 +88,30 @@ $floating_list_len: 6;
 
 
     .orbit {
+        position: relative;
+
         height: $orbit_size;
-        aspect-ratio: 1/1;
+        width: $orbit_size;
+
+        border-radius: 50%;
 
         .image-center {
-            transform: translate(calc($orbit_size/2 - $center_size/2),
-                    calc($orbit_size/2 - $center_size/2));
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            display: grid;
+            align-items: center;
+            justify-items: center;
 
             .user {
                 position: absolute;
                 height: $center_size;
-                aspect-ratio: 1 / 1;
+                aspect-ratio: 1/1;
                 object-fit: cover;
-                border-radius: 50%;
-            }
+                transition: filter 400ms linear;
 
-            .user:nth-child(2) {
-                filter: opacity(1);
-                transition: filter 500ms ease-in;
+                border-radius: 50%;
             }
 
             .user:nth-child(2):hover {
@@ -109,66 +120,49 @@ $floating_list_len: 6;
         }
 
         .floating-list {
+            list-style: none;
             .floating-item {
-                background-color: var(--on-violet-to-blue);
                 position: absolute;
-                padding: $float_item_size*0.3;
-                width: $float_item_size;
+                height: $float_item_size;
+                aspect-ratio: 1/1;
+
                 display: grid;
-                place-items: center;
-                aspect-ratio: 1 / 1;
-                border-radius: 50%;
-                transition:
-                    transform 100ms,
-                    box-shadow 400ms;
+                justify-items: center;
+                align-items: center;
 
-                @for $count from $floating_list_len to 0 {
-                    &:nth-child(#{$count}) {
-                        $entry_delay: ($floating_list_len - $count)*math.div($duration_orbit, $floating_list_len);
-                        $color: --#{nth(green blue orange purple yellow brown red pink white, $count)};
+                transition: all 400ms ease-in-out;
 
-                        animation: orbit-horizontal $duration_orbit ease-in-out $entry_delay infinite,
-                            orbit-vertical $duration_orbit ease-in-out $entry_delay+math.div($duration_orbit, 4) infinite;
-
-                        &:hover,
-                        &:focus {
-                            background-color: var(#{$color}-dark);
-                            color: var(#{$color}-light);
-
-                            box-shadow: inset 4px 4px 4px var(#{$color}-light),
-                            inset -4px -4px 4px #00000077,
-                            4px 4px 15px #00000077;
-                        }
-                    }
+                img {
+                    padding: math.div($float_item_size, 10);
+                    width: $float_item_size;
+                    transition: all 400ms ease-in-out;
                 }
 
                 .description {
-                    display: none;
-                    font-size: $float_item_size*0.1;
-                    font-family: 'Fauna One', serif;
-                    font-weight: bold;
+                    position: relative;
+                    filter: opacity(0);
+
                     text-align: center;
+
+                    font-family: 'Cinzel', serif;
+                    font-size: 0.4em;
+                    font-weight: 700;
+
+                    color: black;
                 }
 
-                &:hover,
-                &:focus {
-                    background-color: aqua;
-                    padding: $float_item_size*0.1;
-                    transform: scale(1.5);
+                @for $index from $floating_list_len to 0 {
+                    $angle: math.div(360, $floating_list_len) * $index;
+                    $radius: math.div($orbit_size, 2);
+                    $x: $radius * math.sin(math.$pi * 2 * math.div($angle, 360));
+                    $y: $radius * math.cos(math.$pi * 2 * math.div($angle, 360));
+    
+                    &:nth-child(#{$index}) {
+                        top: $radius - $y;
+                        left: $radius - $x;
 
-                    .item {
-                        display: none;
+                        transform: translate(-50%, -50%);
                     }
-
-                    .description {
-                        display: block;
-                    }
-                }
-            }
-
-            &:hover {
-                .floating-item {
-                    animation-play-state: paused;
                 }
             }
         }
@@ -177,16 +171,92 @@ $floating_list_len: 6;
 
 }
 
-@keyframes orbit-horizontal {
-    50% {
-        margin-left: $orbit_size - $float_item_size;
+.orbit-section {
+    $scale: 3;
+    .orbit {
+        &:hover {
+            animation-play-state: paused;
+
+            .image-center {
+                .user {
+                    animation-play-state: paused;
+                }
+            }
+
+            .floating-list {
+                .floating-item {
+                    &>* {
+                        animation-play-state: paused;
+                    }
+
+                    &:hover, &:focus {
+                        border-radius: 50%;
+
+                        transform: translate(-50%, -50%) scale($scale);
+
+                        box-shadow:
+                            0px 0px 2px #fff inset,
+                            0px 0px 5px #fff inset,
+                            0px 0px 20px #fff inset,
+                            0px 0px 50px #fff inset,
+                            0px 0px 2px #fff,
+                            0px 0px 5px #fff,
+                            0px 0px 15px #fff,
+                            0px 0px 30px #fff,
+                            0px 0px 100px #fff
+                        ;
+
+                        .item {
+                            filter: opacity(0);
+                            position: absolute;
+                        }
+
+                        .description {
+                            transform: scale(math.div(0.1, $scale));
+                            filter: opacity(1);
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
+.orbit-section {
 
-@keyframes orbit-vertical {
-    50% {
-        margin-top: $orbit_size - $float_item_size;
+    .orbit {
+        animation: orbit $duration_orbit linear infinite;
+
+        .image-center {
+            .user {
+                animation: anti_orbit $duration_orbit linear infinite;
+            }
+        }
+
+        .floating-list {
+            .floating-item {
+                &>* {
+                    animation: anti_orbit $duration_orbit linear infinite;
+                }
+            }
+        }
+    }
+
+}
+
+@keyframes anti_orbit {
+    from {
+        transform: rotateZ(360deg);
+    }
+    to {
+        transform: rotateZ(0deg);
+    }
+}
+
+@keyframes orbit {
+    to {
+        transform: rotateZ(360deg);
     }
 }
 
