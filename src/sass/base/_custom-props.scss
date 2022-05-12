@@ -6,7 +6,4 @@
     --#{$name}-light: #{$value};
     --#{$name}-dark: #{color.adjust($value, $lightness: -40%)};
   }
-
-  --violet-to-blue: linear-gradient(45deg, blueviolet, blue);
-  --on-violet-to-blue: #f0f8ff;
 }
