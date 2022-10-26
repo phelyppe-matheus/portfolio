@@ -1,0 +1,12 @@
+.scroller {
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    height: 100vh;
+    width: 100vw;
+    scroll-snap-type: y mandatory;
+}
+
+.scroller section {
+    scroll-snap-align: center;
+}

@@ -4,119 +4,93 @@ $pixel_art_forest_folder: "/assets/pixel_art_forest";
 $pixe_art_aspect_ratio: math.div(928, 793);
 $cover_size: 135vh;
 
-@function generateTransition($num_transition) {
-    @return runningThroughTheForest #{math.div(120, $num_transition)}s linear infinite,
-    clearFog 2s ease-out;
-}
-
 .intro {
     height: 100vh;
-    filter: saturate(0.5);
+    width: 100vw;
+
+    .header {
+        position: absolute;
+
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+
+        width: 100%;
+
+        padding: 4rem 150px;
+
+        ul:nth-child(1) {
+            margin-right: auto;
+        }
+
+        ul {
+            font-size: 1.63rem;
+            font-family: "Koulen", sans-serif;
+        }
+
+        .logo_header {
+            height: 4rem;
+        }
+    }
+
+    .hero {
+        display: flex;
+
+        font-family: "Koulen", sans-serif;
+        font-size: 20vh;
+        line-height: 88.6%;
+
+        .glasspanel {
+            flex-grow: 3;
+
+            padding-right: 1rem;
+            height: 100vh;
+
+            box-sizing: border-box;
+
+            background: url(/assets/graphic_design/static.png), linear-gradient(159.14deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+            background-blend-mode: overlay, normal;
+            border-right: 1px solid #FFFFFF;
+
+            .invertedtitle {
+                padding-top: 26.4vh;
+
+                color: #151826;
+
+                text-align: end;
+            }
+        }
+
+        .normal-title {
+            flex-grow: 7;
+
+            padding-top: 26.4vh;
+            padding-left: 1.5rem;
+
+            color: #dadff8;
+        }
+    }
 
     .forest {
-        position: absolute;
-        width: 100%;
-        height: 100%;
+        background-image: url(/assets/pixel_art_forest/Background.png);
         background-position-y: bottom;
         background-repeat: repeat no-repeat;
         background-size: auto $cover_size;
         background-attachment: fixed;
-
-        &.shadow:nth-child(1) {
-            animation: generateTransition(1);
-
-            background-image: url("#{$pixel_art_forest_folder}/Layer_0009_2.png");
-        }
-
-        &.shadow:nth-child(2) {
-            animation: generateTransition(2);
-
-            background-image: url("#{$pixel_art_forest_folder}/Layer_0008_3.png");
-        }
-
-        &.shadow:nth-child(3) {
-            animation: generateTransition(3);
-
-            background-image: url("#{$pixel_art_forest_folder}/Layer_0006_4.png"),
-            url("#{$pixel_art_forest_folder}/Layer_0007_Lights.png");
-        }
-
-        &.trees {
-            animation: generateTransition(4);
-
-            background-image: url("#{$pixel_art_forest_folder}/Layer_0002_7.png"),
-            url("#{$pixel_art_forest_folder}/Layer_0003_6.png"),
-            url("#{$pixel_art_forest_folder}/Layer_0004_Lights.png"),
-            url("#{$pixel_art_forest_folder}/Layer_0005_5.png");
-        }
-
-        &.floor {
-            animation: generateTransition(5);
-
-            background-image: url("#{$pixel_art_forest_folder}/Layer_0000_9.png"),
-            url("#{$pixel_art_forest_folder}/Layer_0001_8.png");
-        }
-
-        &.shoutout {
-            height: fit-content;
-            width: fit-content;
-            position: absolute;
-            right: 50px;
-            bottom: 50px;
-
-            a {
-                color: white;
-                text-decoration: none;
-
-                font-family: 'Cinzel', serif;
-                font-weight: bold;
-
-            }
-        }
     }
 
-    &::after {
-        content: '';
-        bottom: 100px;
-        left: 50%;
-
-        transform: translate(-50%, 0);
-
+    .shoutout{
+        
         position: absolute;
+        z-index: 3;
 
-        box-sizing: content-box;
+        bottom: 50px;
+        right: 50px;
 
-        animation: nextSectionHint 2s ease-in-out 10s infinite;
-    }
-}
+        color: #dadff8;
 
-@keyframes runningThroughTheForest {
-    from {
-        background-position-x: 0%;
-    }
-    to {
-        background-position-x: $pixe_art_aspect_ratio*$cover_size;
-    }
-}
-
-@keyframes clearFog {
-    from {
-        box-shadow: 0px 0px 12in #fff inset;
-    }
-    to {
-        box-shadow: 0px 0px 0px #fff0 inset;
-    }
-}
-
-@keyframes nextSectionHint {
-    0%, 100% {
-        border-left: solid 3vh #0000;
-        border-right: solid 3vh #0000;
-        border-top: solid 3vh #0000;
-    }
-    50% {
-        border-left: solid 8vh #0000;
-        border-right: solid 8vh #0000;
-        border-top: solid 8vh #0007;
+        line-height: 175%;
+        font-family: "Koulen", sans-serif;
+        font-size: 1rem;
     }
 }

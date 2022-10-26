@@ -5,71 +5,276 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="assets/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <title>Hi</title>
+
+    <script src="script.js"></script>
+    <script id="rotating-cube">
+        function rotatingCube() {
+            const COLOR_BG = 'white';
+            const COLOR_CUBE = 'black';
+            const SPEED_X = 0.05;
+            const SPEED_Y = 0.06;
+            const SPEED_Z = 0.07;
+
+            const POINT3D = function (x, y, z) { this.x = x, this.y = y, this.z = z }
+
+            var canvas = document.getElementById('loading');
+            document.body.appendChild(canvas);
+            canvas.style.transition = "all 2s ease-in";
+            canvas.style.position = "fixed";
+            canvas.style.zIndex = 2;
+            canvas.style.left = 0;
+            canvas.style.top = 0;
+            var ctx = canvas.getContext("2d");
+
+            const h = document.documentElement.clientHeight;
+            const w = document.documentElement.clientWidth;
+            canvas.height = h;
+            canvas.width = w;
+
+            ctx.fillStyle = COLOR_BG;
+            ctx.strokeStyle = COLOR_CUBE;
+            ctx.lineWidth = w / 100;
+            ctx.lineCap = "round";
+
+            var cx = w / 2;
+            var cy = h / 2;
+            var cz = 0;
+            var size = Math.min(h, w) / 8;
+            var vertices = [
+                new POINT3D(cx - size, cy - size, cz - size),
+                new POINT3D(cx + size, cy - size, cz - size),
+                new POINT3D(cx + size, cy + size, cz - size),
+                new POINT3D(cx - size, cy + size, cz - size),
+                new POINT3D(cx - size, cy - size, cz + size),
+                new POINT3D(cx + size, cy - size, cz + size),
+                new POINT3D(cx + size, cy + size, cz + size),
+                new POINT3D(cx - size, cy + size, cz + size),
+            ];
+
+            var edges = [
+                [0, 1], [1, 2], [2, 3], [3, 0],
+                [4, 5], [5, 6], [6, 7], [7, 4],
+                [0, 4], [1, 5], [2, 6], [3, 7],
+            ]
+
+            var timeDelta, timeLast = 0;
+
+            function draw(timeNow) {
+                timeDelta = timeNow - timeLast;
+                timeLast = timeNow;
+
+                ctx.fillRect(0, 0, w, h);
+
+                let angle = timeDelta * 0.001 * SPEED_Z * Math.PI * 2;
+                vertices.forEach(v => {
+                    let dx = v.x - cx;
+                    let dy = v.y - cy;
+                    let x = dx * Math.cos(angle) - dy * Math.sin(angle);
+                    let y = dx * Math.sin(angle) + dy * Math.cos(angle);
+                    v.x = x + cx;
+                    v.y = y + cy;
+                });
+
+                angle = timeDelta * 0.001 * SPEED_X * Math.PI * 2;
+                vertices.forEach(v => {
+                    let dy = v.y - cy;
+                    let dz = v.z - cz;
+                    let y = dy * Math.cos(angle) - dz * Math.sin(angle);
+                    let z = dy * Math.sin(angle) + dz * Math.cos(angle);
+                    v.y = y + cy;
+                    v.z = z + cz;
+                });
+
+                angle = timeDelta * 0.001 * SPEED_Y * Math.PI * 2;
+                vertices.forEach(v => {
+                    let dx = v.x - cx;
+                    let dz = v.z - cz;
+                    let z = dz * Math.cos(angle) - dx * Math.sin(angle);
+                    let x = dz * Math.sin(angle) + dx * Math.cos(angle);
+                    v.x = x + cx;
+                    v.z = z + cz;
+                });
+
+                edges.forEach(edge => {
+                    ctx.beginPath();
+                    ctx.moveTo(vertices[edge[0]].x, vertices[edge[0]].y);
+                    ctx.lineTo(vertices[edge[1]].x, vertices[edge[1]].y);
+                    ctx.stroke();
+                });
+            }
+
+            var drawIntervalId = setInterval(() => {
+                requestAnimationFrame(draw);
+            }, 1000 / 30);
+
+            window.addEventListener('load', () => {
+                canvas.style.left = '-100vw';
+                var removeCanvaTimeoutId = setTimeout(() => {
+                    canvas.remove();
+                    clearInterval(drawIntervalId);
+                    clearTimeout(removeCanvaTimeoutId);
+                }, 2000);
+            });
+        }
+    </script>
 </head>
 
 <body>
+    <canvas id="loading" style="height: 100vh;"></canvas>
+    <script>rotatingCube();</script>
+
     <section class="intro">
-        <div class="forest shadow"></div>
-        <div class="forest shadow"></div>
-        <div class="forest shadow"></div>
-        <div class="forest trees"></div>
-        <div class="forest floor"></div>
-        <div class="forest shoutout">
-            <a class="myself" href="#">Animation by: Phelyppe Matheus</a><br>
-            <a class="eder" href="https://edermunizz.itch.io/">Artwork by: Eder Muniz</a></div>
-        <div class="logo"></div>
+        <li class="header">
+            <ul>
+                <img src="assets/logo-dark-portfolio-variant.svg" alt="" class="logo_header">
+            </ul>
+            <ul>
+                <p>Home</p>
+            </ul>
+            <ul>
+                <p>My Works</p>
+            </ul>
+            <ul>
+                <p>Contacts</p>
+            </ul>
+        </li>
+        <div class="hero forest">
+            <div class="glasspanel">
+                <p class="invertedtitle">LET'S</p>
+            </div>
+            <h1 class="normal-title">WORK <br> TOGETHER</h1>
+        </div>
+        <div class="shoutout">
+            <h3 class="crew">Animation by: Phelyppe Matheus <br>
+                Artwork by: Eder Muniz</h3>
         </div>
     </section>
-    <section class="orbit-section">
-        <div class="about">
-            <h1 class="title">Hi, I am Phelyppe Matheus</h1>
+
+    <div class="parallax-container great-blob-container">
+        <img src="assets/graphic_design/great_blob.svg" class="great-blob">
+    </div>
+    <div class="parallax-container triangle-group-2-container">
+        <img src="assets/graphic_design/triangle_group_2.svg" class="triangle-group-2">
+    </div>
+
+    <section class="about">
+        <img src="assets/graphic_design/triangle_group_1.svg" class="design-accent triangle-group-1">
+        <div class="description">
+            <h1 class="title">Hi, I Am Phelyppe Matheus</h1>
             <h2 class="subtitle">Software Engineer</h2>
             <p class="text">
-                Welcome to my page, here I'm gonna test some new design ideas, as it's kinda my hobby to do so. And also
-                show some projects I've worked on, hopefully like some timeline. Feel free to see my stuff and copy the
-                designs here, if you're ever gonna need it. Here is<a
-                    href="https://github.com/phelyppe-matheus/HTML-playground" target="blank">another repo</a>where you
-                can see how i generate this file. How about scrolling to see my new, cool stuff?
+                Wanna get your project ideas out of the desk into the real world?
+                <br>
+                Or do you want to use technology to bring your workflow to the next level?
+                <br>
+                Then, I'm the one you're looking for!
+                <br>
+                With multiple technologies and the best aplications available, I want to help you and your enterprise to
+                reach your maximum performance, to get your ideas out in the world and reach new heights.
             </p>
+            <button class="submit">See my work</button>
         </div>
         <div class="orbit-container">
             <div class="orbit">
-                <div class="image-center">
-                    <img src="assets/phe_profile_1.jpg" alt="user" class="user" loading="lazy">
-                    <img src="assets/phe_profile_2.jpg" alt="user" class="user">
-                </div>
-                <ul class="floating-list">
-                    <li class="floating-item">
-                        <img src="assets/arduino-logo.svg" alt="arduino" class="item">
-                        <p class="description">Robotics</p>
-                    </li>
-                    <li class="floating-item">
-                        <img src="assets/JavaScript-logo.svg" alt="javascript" class="item">
-                        <p class="description">FrontEnd</p>
-                    </li>
-                    <li class="floating-item">
-                        <img src="assets/postgresql-logo.svg" alt="postgres" class="item">
-                        <p class="description">Postgres Databases</p>
-                    </li>
-                    <li class="floating-item">
-                        <img src="assets/Python-logo.svg" alt="python" class="item">
-                        <p class="description">Data-science</p>
-                    </li>
-                    <li class="floating-item">
-                        <img src="assets/UML-logo.svg" alt="Unified Markup Language" class="item">
-                        <p class="description">System Analisys</p>
-                    </li>
-                    <li class="floating-item">
-                        <img src="assets/visual-studio-code-logo.svg" alt="visual studio code" class="item">
-                        <p class="description">Backend</p>
-                    </li>
-                </ul>
+                <img src="assets/phe_profile_2.jpg" alt="This site's creator's photo" class="user">
+                <img src="assets/arduino-logo.svg" alt="Arduino Logo" class="tech">
+                <img src="assets/postgresql-logo.svg" alt="Postgres Logo" class="tech">
+                <img src="assets/Python-logo.svg" alt="Python Logo" class="tech">
+                <img src="assets/UML-logo.svg" alt="UML Logo" class="tech">
+                <img src="assets/visual-studio-code-logo.svg" alt="VSCode Logo" class="tech">
+                <img src="assets/JavaScript-logo.svg" alt="JavaScript Logo" class="tech">
             </div>
         </div>
     </section>
+
+    <h1 class="work-accent">MY WORKS</h1>
+    <section class="work">
+        <img src="assets/graphic_design/large_doodle.svg" alt="" class="design-accent large-doodle">
+
+        <div class="works-title">My Works</div>
+        <div class="work-card">
+            <h2 class="title">Kadosh App</h2>
+            <div class="description">Aplicativo para loja de roupas N.A Kadosh</div>
+        </div>
+        <div class="work-card">
+            <h2 class="title">Portfolio</h2>
+            <div class="description">Este site</div>
+        </div>
+        <div class="work-card">
+            <h2 class="title">Mat Controller</h2>
+            <div class="description">Aplicativo de controle de tapetes</div>
+        </div>
+        <div class="work-card">
+            <h2 class="title">Undefined</h2>
+            <div class="description">No Description</div>
+        </div>
+        <div class="work-card">
+            <h2 class="title">Undefined</h2>
+            <div class="description">No Description</div>
+        </div>
+        <div class="work-card">
+            <h2 class="title">Undefined</h2>
+            <div class="description">No Description</div>
+        </div>
+        <div class="work-card">
+            <h2 class="title">Undefined</h2>
+            <div class="description">No Description</div>
+        </div>
+        <div class="work-card">
+            <h2 class="title">Undefined</h2>
+            <div class="description">No Description</div>
+        </div>
+    </section>
+
+    <section class="experiences">
+        <h1 class="title">Experiences</h1>
+        <div class="experience">
+            <img src="" alt="" class="photo">
+            <div class="about">
+                <h3 class="experience-date">2019 - curent</h3>
+                <h2 class="experience-title">Ifpi - Federal Institute of Education, Science and Technology of Piauí</h2>
+                <p class="description">Is both my middle school and my university. Here I learnt how to analize,
+                    document, implement and improve solutions along with my clients.</p>
+            </div>
+        </div>
+        <div class="experience">
+            <img src="" alt="" class="photo">
+            <div class="about">
+                <h3 class="experience-date">2019 - 2021</h3>
+                <h2 class="experience-title">SSP|PI - Piauí’s Public Security Secretariat</h2>
+                <p class="description">Part time with real-world applications, a developer team, and great sinergy.
+                    Here, I got to work with web development with django from python. The group did both REST API and
+                    web apps, including stylization.
+                    The application was, then, run in production and improved for all of the cowntry to use.
+                    All of the code is government owned and these sites aren’t open to the public, so there is no link.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="contacts">
+        <h1 class="title">Contacts</h1>
+        <div class="contact-form">
+            <label for="name">Name</label>
+            <input type="text" class="name" name="name" id="name">
+            <label for="email">Email</label>
+            <input type="email" class="email" name="email" id="email">
+            <label for="message">Message</label>
+            <input type="text" class="message" name="message" id="message">
+            <button class="submit">Contact Me</button>
+        </div>
+        <h2 class="secondary_cta"></h2>
+        <div class="social-medias">
+            <img src="assets/facebook.svg" alt="">
+            <img src="assets/linkedin.svg" alt="">
+            <img src="assets/instagram.svg" alt="">
+        </div>
+        <img src="assets/email/image 7.png" alt="">
+    </section>
+
 </body>
 
 </html>

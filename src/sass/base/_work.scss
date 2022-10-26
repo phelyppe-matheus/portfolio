@@ -1,0 +1,45 @@
+.work {
+    position: relative;
+    height: 100vh;
+
+    overflow: hidden;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 20rem);
+    place-items: center;
+    place-content: center;
+
+    gap: 5rem;
+
+    .works-title {
+        position: absolute;
+
+        top: 5rem;
+        left: 5rem;
+
+        font-family: 'Koulen', serif;
+        font-size: 5rem;
+    }
+
+    .work-card {
+        aspect-ratio: 1/1;
+        width: 20rem;
+
+        top: 0;
+        left: 0;
+
+        display: grid;
+        grid-template-rows: 1fr 3fr;
+
+        .title {
+            margin: auto 0;
+            text-align: center;
+        }
+
+        .description {
+            padding: 2rem;
+        }
+    }
+
+}

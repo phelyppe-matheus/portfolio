@@ -1,5 +1,5 @@
 {
-    "name": "test_html",
+    "name": "phe_portfolio",
     "version": "0.1.0",
     "description": "This is for testing my css/htm projects",
     "main": "public/index.html",
@@ -8,9 +8,11 @@
         "build:sass": "sass  --no-source-map src/sass:public/css",
         "copy:assets": "copyfiles -u 1 ./src/assets/**/* public",
         "copy:html": "copyfiles -u 1 ./src/*.html public",
+        "copy:scripts": "copyfiles -u 1 ./src/*.js public",
         "copy": "npm-run-all --parallel copy:*",
         "watch:assets": "onchange \"/src/assets/**/*\" -- npm run copy:assets",
         "watch:html": "onchange \"src/*.html\" -- npm run copy:html",
+        "watch:scripts": "onchange \"src/*.js\" -- npm run copy:scripts",
         "watch:sass": "sass  --no-source-map --watch src/sass:public/css",
         "watch": "npm-run-all --parallel watch:*",
         "serve": "browser-sync start --server public --files public",
