@@ -28,6 +28,7 @@ ol[role="list"] {
 
 /* Set core body defaults */
 body {
+  overflow-x: hidden;
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;

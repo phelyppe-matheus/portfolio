@@ -36,7 +36,7 @@ parallaxObjectsRefresh = () => {
             scrollBoundStyleElement: 'top',
             offset: 0.8,
             unit: 'px',
-        }
+        },
     ]
 }
 
