@@ -7,7 +7,7 @@ parallaxObjectsRefresh = () => {
     parallaxObjects = [
         {
             object: document.getElementsByClassName("parallax-container great-blob-container")[0],
-            target: document.getElementsByClassName("about")[0],
+            pointZero: document.getElementsByClassName("about")[0],
             rate: -2.1,
             scrollBoundStyleElement: 'top',
             offset: 0.46,
@@ -15,7 +15,7 @@ parallaxObjectsRefresh = () => {
         },
         {
             object: document.getElementsByClassName("triangle-group-2")[0],
-            target: document.getElementsByClassName("about")[0],
+            pointZero: document.getElementsByClassName("about")[0],
             rate: -1.4,
             scrollBoundStyleElement: 'left',
             offset: -0.1,
@@ -23,7 +23,7 @@ parallaxObjectsRefresh = () => {
         },
         {
             object: document.getElementsByClassName("parallax-container triangle-group-2-container")[0],
-            target: document.getElementsByClassName("about")[0],
+            pointZero: document.getElementsByClassName("about")[0],
             rate: -0.8,
             scrollBoundStyleElement: 'top',
             offset: -0.5,
@@ -31,7 +31,7 @@ parallaxObjectsRefresh = () => {
         },
         {
             object: document.getElementsByClassName("work-accent")[0],
-            target: document.getElementsByClassName("work")[0],
+            pointZero: document.getElementsByClassName("work")[0],
             rate: -2.0,
             scrollBoundStyleElement: 'top',
             offset: 0.8,
@@ -40,25 +40,28 @@ parallaxObjectsRefresh = () => {
     ]
 }
 
-parallax_refresh = () => {
+parallaxRefresh = () => {
     parallaxObjectsRefresh();
 
     parallaxObjects.forEach(parallaxObject => {
         const objectElement = parallaxObject.object;
-        const targetElement = parallaxObject.target;
+        const objectRect = objectElement.getBoundingClientRect();
+        const pointZeroElement = parallaxObject.pointZero;
+        const pointZeroRect = pointZeroElement.getBoundingClientRect();
         const velocityRate = parallaxObject.rate - 1;
-        var positionOffset = objectElement.getBoundingClientRect().height * parallaxObject.offset;
+        var positionOffset = objectRect.height * parallaxObject.offset;
         const styleElement = parallaxObject.scrollBoundStyleElement;
         const unit = parallaxObject.unit;
 
-        const target_point = targetElement.getBoundingClientRect().top + targetElement.getBoundingClientRect().height / 2 - window.innerHeight / 2;
+        const distanceFromPointZero = pointZeroRect.top + pointZeroRect.height / 2 - window.innerHeight / 2;
 
-        const window_center_y = window.scrollY + window.innerHeight / 2;
+        const windowCenterY = window.scrollY + window.innerHeight / 2;
 
-        const style_value = window_center_y - target_point * velocityRate - positionOffset;
+        const styleValue = windowCenterY - distanceFromPointZero * velocityRate - positionOffset;
+
 
         objectElement.style.transition = `${styleElement} 2s ease-in-out`;
-        objectElement.style[styleElement] = `${style_value}${unit}`;
+        objectElement.style[styleElement] = `${styleValue}${unit}`;
     });
 }
 
@@ -83,8 +86,7 @@ const scrollSnap = () => {
     scrolling = true;
 }
 
-window.onload = () => {
-
+const scrollListener = () => {
     window.addEventListener("scroll", () => {
 
         clearTimeout(scrollTimeout);
@@ -93,8 +95,22 @@ window.onload = () => {
         }, 100);
 
         // scrollSnap();
-        parallax_refresh();
+        parallaxRefresh();
     });
+}
 
-    parallax_refresh();
+const setUpHeaderButtons = () => {
+    goToAbout.onclick = () => about.scrollIntoView({behavior: 'smooth'});
+    goToWorks.onclick = () => work.scrollIntoView({behavior: 'smooth'});
+    goToExperiences.onclick = () => experiences.scrollIntoView({behavior: 'smooth'});
+    goToContacts.onclick = () => contacts.scrollIntoView({behavior: 'smooth'});
+}
+
+window.onload = () => {
+
+    scrollListener();
+
+    parallaxRefresh();
+
+    setUpHeaderButtons();
 }
