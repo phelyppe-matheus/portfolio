@@ -2,7 +2,7 @@
 
 $pixel_art_forest_folder: "/assets/pixel_art_forest";
 $pixe_art_aspect_ratio: math.div(928, 793);
-$cover_size: 135vh;
+$cover_size: 130vh;
 
 .intro {
     height: 100vh;
@@ -17,28 +17,32 @@ $cover_size: 135vh;
 
         width: 100%;
 
-        padding: 4rem 150px;
+        padding: 2rem 4rem;
 
         ul:nth-child(1) {
             margin-right: auto;
         }
 
         ul {
-            font-size: 1.63rem;
+            font-size: 1.22rem;
             font-family: "Koulen", sans-serif;
+
+            color: #dadff8;
         }
 
         .logo_header {
-            height: 4rem;
+            height: 2rem;
         }
     }
 
     .hero {
+        $font_size: min(20vh, 15vw);
+        $line_height: $font_size;
         display: flex;
 
         font-family: "Koulen", sans-serif;
-        font-size: 20vh;
-        line-height: 88.6%;
+        font-size: $font_size;
+        line-height: $line_height;
 
         .glasspanel {
             flex-grow: 3;
@@ -48,14 +52,22 @@ $cover_size: 135vh;
 
             box-sizing: border-box;
 
-            background: url(/assets/graphic_design/static.png), linear-gradient(159.14deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+            background: url(/assets/graphic_design/static.png), linear-gradient(159.14deg, #dadff8 0%, rgba(255, 255, 255, 0) 100%);
             background-blend-mode: overlay, normal;
-            border-right: 1px solid #FFFFFF;
+            border-right: 1px solid #dadff8;
 
             .invertedtitle {
-                padding-top: 26.4vh;
+                padding: 26.4vh 0 calc(100vh - 26.4vh - $line_height);
 
                 color: #151826;
+                background-image: url(/assets/pixel_art_forest/Background.png);
+                background-position-y: bottom;
+                background-repeat: repeat no-repeat;
+                background-size: auto $cover_size;
+                background-attachment: fixed;
+
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
 
                 text-align: end;
             }
@@ -91,6 +103,6 @@ $cover_size: 135vh;
 
         line-height: 175%;
         font-family: "Koulen", sans-serif;
-        font-size: 1rem;
+        font-size: .75rem;
     }
 }
