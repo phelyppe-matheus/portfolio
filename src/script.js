@@ -59,6 +59,9 @@ parallaxRefresh = () => {
 
         const styleValue = windowCenterY - distanceFromPointZero * velocityRate - positionOffset;
 
+        if (Math.abs(distanceFromPointZero) > Math.max(window.innerHeight, window.innerWidth) / 2 + Math.max(objectRect.height, objectRect.width) / 2) {
+            return;
+        }
 
         objectElement.style.transition = `${styleElement} 2s ease-in-out`;
         objectElement.style[styleElement] = `${styleValue}${unit}`;
@@ -97,13 +100,6 @@ const scrollListener = () => {
         // scrollSnap();
         parallaxRefresh();
     });
-}
-
-const setUpHeaderButtons = () => {
-    goToAbout.onclick = () => about.scrollIntoView({behavior: 'smooth'});
-    goToWorks.onclick = () => work.scrollIntoView({behavior: 'smooth'});
-    goToExperiences.onclick = () => experiences.scrollIntoView({behavior: 'smooth'});
-    goToContacts.onclick = () => contacts.scrollIntoView({behavior: 'smooth'});
 }
 
 window.onload = () => {
