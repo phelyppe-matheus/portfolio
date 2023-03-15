@@ -102,6 +102,13 @@ const scrollListener = () => {
     });
 }
 
+const setUpHeaderButtons = () => {
+    goToAbout.onclick = () => about.scrollIntoView({behavior: 'smooth'});
+    goToWorks.onclick = () => work.scrollIntoView({behavior: 'smooth'});
+    goToExperiences.onclick = () => experiences.scrollIntoView({behavior: 'smooth'});
+    goToContacts.onclick = () => contacts.scrollIntoView({behavior: 'smooth'});
+}
+
 window.onload = () => {
 
     scrollListener();
