@@ -79,36 +79,44 @@ button {
   align-items: center;
   gap: 3rem;
   width: 100%;
-  padding: 4rem 150px;
+  padding: 2rem 4rem;
 }
 .intro .header ul:nth-child(1) {
   margin-right: auto;
 }
 .intro .header ul {
-  font-size: 1.63rem;
+  font-size: 1.22rem;
   font-family: "Koulen", sans-serif;
+  color: #dadff8;
 }
 .intro .header .logo_header {
-  height: 4rem;
+  height: 2rem;
 }
 .intro .hero {
   display: flex;
   font-family: "Koulen", sans-serif;
-  font-size: 20vh;
-  line-height: 88.6%;
+  font-size: min(20vh, 15vw);
+  line-height: min(20vh, 15vw);
 }
 .intro .hero .glasspanel {
   flex-grow: 3;
   padding-right: 1rem;
   height: 100vh;
   box-sizing: border-box;
-  background: url(/assets/graphic_design/static.png), linear-gradient(159.14deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+  background: url(/assets/graphic_design/static.png), linear-gradient(159.14deg, #dadff8 0%, rgba(255, 255, 255, 0) 100%);
   background-blend-mode: overlay, normal;
-  border-right: 1px solid #FFFFFF;
+  border-right: 1px solid #dadff8;
 }
 .intro .hero .glasspanel .invertedtitle {
-  padding-top: 26.4vh;
+  padding: 26.4vh 0 calc(73.6vh - min(20vh, 15vw));
   color: #151826;
+  background-image: url(/assets/pixel_art_forest/Background.png);
+  background-position-y: bottom;
+  background-repeat: repeat no-repeat;
+  background-size: auto 130vh;
+  background-attachment: fixed;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-align: end;
 }
 .intro .hero .normal-title {
@@ -121,7 +129,7 @@ button {
   background-image: url(/assets/pixel_art_forest/Background.png);
   background-position-y: bottom;
   background-repeat: repeat no-repeat;
-  background-size: auto 135vh;
+  background-size: auto 130vh;
   background-attachment: fixed;
 }
 .intro .shoutout {
@@ -132,7 +140,7 @@ button {
   color: #dadff8;
   line-height: 175%;
   font-family: "Koulen", sans-serif;
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 
 .design-accent {
