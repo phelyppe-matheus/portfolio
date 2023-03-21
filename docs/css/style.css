@@ -205,22 +205,21 @@ button {
 }
 .about .description h1.title {
   font-family: "Koulen", sans-serif;
-  font-size: 2.6rem;
+  font-size: 1.6rem;
 }
 .about .description h2.subtitle {
   font-family: "Koulen", sans-serif;
-  font-size: 1.6rem;
+  font-size: 1rem;
 }
 .about .description p.text {
   font-family: "Rokkitt", serif;
-  font-size: 1.6rem;
-  width: 48rem;
+  font-size: 1rem;
   line-height: 90%;
   padding: 4.3rem 0;
 }
 .about .description button.submit {
   font-family: "Koulen", sans-serif;
-  font-size: 3.17rem;
+  font-size: 2.6rem;
   padding: 2.5rem 3.12rem;
   border-radius: 6rem;
   line-height: 2.5rem;
@@ -231,10 +230,13 @@ button {
   width: 50vw;
   display: flex;
   justify-content: center;
+  position: relative;
+  flex-grow: 1;
 }
 .about .orbit-container .orbit {
   width: min(100vh, 50vw);
-  position: relative;
+  position: absolute;
+  transform: translateY(-50%);
   aspect-ratio: 1/1;
 }
 .about .orbit-container .orbit img {
@@ -284,12 +286,11 @@ button {
 .work {
   position: relative;
   height: 100vh;
-  overflow: hidden;
   display: grid;
-  grid-template-columns: repeat(4, 20rem);
+  grid-template-columns: repeat(4, 10rem);
   place-items: center;
   place-content: center;
-  gap: 5rem;
+  gap: 1rem;
   color: hsl(205deg, 100%, 19%);
 }
 .work::before {
@@ -298,7 +299,7 @@ button {
   width: 100%;
   height: 80%;
   left: 10rem;
-  top: 0;
+  top: 5rem;
   background: radial-gradient(100.26% 154.72% at 100% 100%, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%), #EAF6FF;
   box-shadow: 0px 4px 0px #BCE3FF;
   border-radius: 100px;
@@ -306,20 +307,18 @@ button {
 }
 .work .works-title {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(calc(-50% - 45rem), calc(-100% - 22.5rem));
+  top: 0;
+  left: 0;
+  transform: translate(10%, 0%);
   font-family: "Koulen", serif;
   font-size: 10rem;
-  line-height: 60%;
+  line-height: 100%;
   z-index: 1;
 }
 .work .work-card {
   position: relative;
   aspect-ratio: 1/1;
-  width: 20rem;
-  top: 0;
-  left: 0;
+  width: 10rem;
   display: grid;
   border: 4px solid white;
   border-radius: 15px;
@@ -331,7 +330,7 @@ button {
   margin: auto 0;
   text-align: center;
   font-family: "Koulen", sans-serif;
-  font-size: 2.6rem;
+  font-size: 1.6rem;
 }
 .work .work-card .description {
   display: none;
@@ -346,7 +345,7 @@ button {
 .experiences .title {
   font-family: "Koulen", sans-serif;
   font-weight: 400;
-  font-size: min(15rem, 100vw - 200px);
+  font-size: min(10rem, 100vw - 200px);
   line-height: 325px;
   margin: 0 200px;
   color: #003A62;
