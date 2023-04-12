@@ -345,7 +345,7 @@ button {
 .experiences .title {
   font-family: "Koulen", sans-serif;
   font-weight: 400;
-  font-size: min(10rem, 100vw - 200px);
+  font-size: min(15rem, 100vw - 200px);
   line-height: 325px;
   margin: 0 200px;
   color: #003A62;
