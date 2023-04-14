@@ -10,6 +10,22 @@
     <title>Phelyppe's Portfolio</title>
 
     <script id="loading-script">
+        let startLoadingId = -1;
+        let endLoadingId;
+        let endLoadingAnimation;
+        let endLoading = () => {
+            endLoadingId = setInterval(
+                async () => {
+                    if (startLoadingId !== -1) {
+                        clearInterval(startLoadingId);
+                        await endLoadingAnimation();
+                        clearInterval(endLoadingId);
+                    }
+                },
+                1000
+            );
+        }
+
         const setInlineStyle = (element, prop) => {
             Object.entries(prop).forEach(([key, value]) => {
                 element.style[key] = value;
@@ -25,42 +41,65 @@
             const letterY2 = new Path2D('M76.1352 1.51359C75.4983 0.66442 74.309 0.460695 73.4258 1.04949L46.1094 19.2604C45.4376 19.7083 44.5624 19.7083 43.8906 19.2604L16.5742 1.04948C15.691 0.460682 14.5017 0.664405 13.8648 1.51358L1.26852 18.3087C0.579615 19.2272 0.803779 20.5359 1.75911 21.1728L29.1094 39.4063C29.6658 39.7772 30 40.4017 30 41.0704V58C30 59.1046 30.8954 60 32 60H58C59.1046 60 60 59.1046 60 58V41.0704C60 40.4017 60.3342 39.7772 60.8906 39.4063L88.2409 21.1728C89.1962 20.5359 89.4204 19.2272 88.7315 18.3087L76.1352 1.51359Z');
             const letterY3 = new Path2D('M90 2.00001C90 0.895445 89.1046 1.50311e-05 88 1.47502e-05L62 8.13802e-06C60.8954 7.85711e-06 60 0.895438 60 2.00001V18C60 19.1046 59.1046 20 58 20H32C30.8954 20 30 19.1046 30 18V2C30 0.895434 29.1046 3.70084e-06 28 3.56038e-06L2 2.54313e-07C0.895431 1.1386e-07 0 0.895431 0 2V38C0 39.1046 0.89543 40 2 40H28C29.1046 40 30 40.8954 30 42V58C30 59.1046 30.8954 60 32 60H58C59.1046 60 60 59.1046 60 58V42C60 40.8954 60.8954 40 62 40H88C89.1046 40 90 39.1046 90 38V2.00001Z');
 
-            const letterWidth = 90;
+            let letterWidth = 90;
             const gap = 10;
 
             const cv = document.createElement('canvas');
             const ctx = cv.getContext('2d');
-            const h = window.innerHeight;
-            const w = window.innerWidth;
 
-            const scaledLetterWidth = (w-gap*7)*0.09;
-            const scale = scaledLetterWidth/letterWidth;
+            const h = Math.max(window.innerHeight, window.innerWidth);
+
+            const scaledLetterWidth = (h-gap*7)*0.09;
+            let scale = scaledLetterWidth/letterWidth;
+
+            endLoadingAnimation = async () => {
+                cv.animate(
+                    [
+                        {scale: '1'},
+                        {scale: '0'},
+                    ],
+                    {
+                        duration: 1000,
+                        iterations: 1,
+                        easing: "ease-out",
+                        fill: "forwards"
+                    }
+                )
+                document.body.style.overflow = "";
+            }
 
             const setup = () => {
 
                 setInlineStyle(cv , {
                     "position": "fixed",
-                    "height": "100vh",
-                    "height": "100vh",
-                    "width": "100vw",
-                    "inset": "0",
+                    "height": h,
+                    "width": h,
+                    "inset": '0 auto auto 0',
+                    "transform": "translate(-50%, -50%) translate(50vw, 50vh)",
                     "zIndex": '2'
                 });
                 document.body.appendChild(cv);
 
                 cv.height = h;
-                cv.width = w;
+                cv.width = h;
                 cv.clientHeight = h;
-                cv.clientWidth = w;
+                cv.clientWidth = h;
 
-                ctx.translate(w/2, h/2);
+                ctx.translate(h/2, h/2);
                 window.scrollTo(0, 0);
                 document.body.style.overflow = "hidden";
 
-                draw();
+                drawBase();
+                loop();
             }
 
-            const draw = async () => {
+            const loop = () => {
+                startLoadingId = setInterval(() => {
+                    requestAnimationFrame(rowlette);
+                }, 1000/30);
+            }
+
+            const drawBase = async () => {
                 const phelyppe = [
                     letterP,
                     letterH,
@@ -72,9 +111,10 @@
                     letterE
                 ];
 
+                ctx.save();
                 ctx.fillStyle = "#000000";
                 ctx.beginPath();
-                ctx.arc(0, 0, w*0.45, 0, 2 * Math.PI);
+                ctx.arc(0, 0, h*0.45, 0, 2 * Math.PI);
                 await ctx.fill();
                 ctx.closePath();
 
@@ -88,12 +128,36 @@
                 });
 
                 ctx.translate(-(letterWidth+gap)*4, -(60+gap));
-                setInterval(() => {
-                    requestAnimationFrame(loop);
-                }, 1000/30);
             }
 
-            const drawYs = (offset) => {
+            const rowlette = async (timeNow) => {
+                const timeSlow = 20;
+                const offset = (90-gap*2);
+                const rotationStep = (timeNow/timeSlow)%offset;
+                const rotationCount = (timeNow/timeSlow)/offset;
+                const easeInOut = Math.sin((rotationStep+40)*5*0.0175);
+
+                ctx.save();
+                ctx.fillStyle = '#000'
+
+                ctx.beginPath();
+                ctx.rect(-gap, -(90+gap), 90+2*gap, 470+3*gap);
+                ctx.closePath();
+                await ctx.fill();
+                ctx.translate(0, 12*easeInOut+rotationStep-offset);
+                // ctx.translate(0, -offset);
+                rowOfY(Math.floor(rotationCount));
+                ctx.restore();
+
+                ctx.beginPath();
+                ctx.fillStyle = '#000'
+                ctx.rect(-gap, -2*offset, 90+2*gap, 2*offset);
+                ctx.rect(-gap, 90*2+gap*2, 90+2*gap, offset);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            const rowOfY = (offset) => {
                 const ys = [
                     letterY1,
                     letterY2,
@@ -106,48 +170,6 @@
                     ctx.translate(0, 60+gap);
                 }
                 ctx.closePath();
-            }
-
-            const showStats = (count, stat) => {
-                ctx.save();
-                ctx.beginPath();
-                ctx.fillStyle = '#ffffff'
-                ctx.arc(-w*0.7+count/10, -stat+h/2, 2, 2, 2 * Math.PI);
-                ctx.closePath();
-                ctx.fill();
-                ctx.restore();
-            }
-
-            const loop = async (timeNow) => {
-                const timeSlow = 20;
-                const offset = (90-gap*2);
-                const rotationStep = (timeNow/timeSlow)%offset;
-                const rotationCount = (timeNow/timeSlow)/offset;
-                const easeInOut = Math.sin((rotationStep+40)*5*0.0175);
-
-                // showStats(timeNow, rotationStep);
-                // showStats(timeNow, rotationCount);
-                // showStats(timeNow, 12*easeInOut);
-                // showStats(timeNow, 12*easeInOut+rotationStep);
-
-                ctx.save();
-                ctx.fillStyle = '#000'
-
-                ctx.beginPath();
-                ctx.rect(-gap, -(90+gap), 90+2*gap, 470+3*gap);
-                ctx.closePath();
-                await ctx.fill();
-                ctx.translate(0, 12*easeInOut+rotationStep-offset);
-                // ctx.translate(0, -offset);
-                drawYs(Math.floor(rotationCount));
-                ctx.restore();
-
-                ctx.beginPath();
-                ctx.fillStyle = '#000'
-                ctx.rect(-gap, -2*offset, 90+2*gap, 2*offset);
-                ctx.rect(-gap, 90*2+gap*2, 90+2*gap, offset);
-                ctx.closePath();
-                ctx.fill();
             }
 
             requestAnimationFrame(setup);
