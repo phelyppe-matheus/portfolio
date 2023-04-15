@@ -1,0 +1,142 @@
+@use 'sass:math';
+
+$pixel_art_forest_folder: "/assets/pixel_art_forest";
+$pixe_art_aspect_ratio: math.div(928, 793);
+$cover_size: 130vh;
+
+.intro {
+    height: 100vh;
+    width: 100vw;
+
+    background-image:
+        linear-gradient(
+            hsl(0, 0%, 0%, 0.3) 0%,
+            hsl(0, 0%, 0%, 0) 30%,
+        ),
+        conic-gradient(
+            hsl(230, 100%, 80%) 0deg,
+            hsl(230, 100%, 80%) 45deg,
+            hsl(230, 100%, 76%, 0) 45deg,
+            hsl(230, 100%, 12%, 0) 315deg,
+            hsl(230, 100%, 10%) 315deg,
+            hsl(230, 100%, 10%) 360deg
+        ),
+        linear-gradient(45deg, transparent 49%, black 49%, black 51%, transparent 51%),
+        linear-gradient(135deg, transparent 49%, black 49%, black 51%, transparent 51%),
+        conic-gradient(
+            hsl(230, 100%, 90%) 0deg,
+            hsl(230, 100%, 90%) 45deg,
+            hsl(230, 100%, 76%) 45deg,
+            hsl(230, 100%, 12%) 315deg,
+            hsl(230, 100%, 10%) 315deg,
+            hsl(230, 100%, 10%) 360deg
+        );
+
+    background-blend-mode: overlay, normal, overlay, overlay, normal;
+
+    background-size: auto, auto, 100px 100px, 100px 100px, auto;
+    background-position: 50% 50%;
+    background-attachment: fixed;
+
+    .header {
+        position: absolute;
+
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+
+        width: 100%;
+
+        padding: 2rem 4rem;
+
+        ul:nth-child(1) {
+            margin-right: auto;
+        }
+
+        ul {
+            font-size: 1.22rem;
+            font-family: "Koulen", sans-serif;
+
+            color: #dadff8;
+        }
+
+        .logo_header {
+            height: 2rem;
+        }
+    }
+
+    .hero {
+        $font_size: min(20vh, 15vw);
+        $line_height: $font_size;
+        display: flex;
+
+        font-family: "Koulen", sans-serif;
+        font-size: $font_size;
+        line-height: $line_height;
+
+        .glasspanel {
+            flex-grow: 3;
+
+            padding-right: 1rem;
+            height: 100vh;
+
+            box-sizing: border-box;
+
+            background: url(/assets/graphic_design/static.png), linear-gradient(159.14deg, #dadff8 0%, rgba(255, 255, 255, 0) 100%);
+            background-blend-mode: overlay, normal;
+            border-right: 1px solid #dadff8;
+
+            .invertedtitle {
+                margin: 26.4vh 0 calc(100vh - 26.4vh - $line_height);
+
+                color: hsl(49, 55%, 66%, 0.5);
+                background-image:
+                    radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+                    radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+                background-position-y: bottom;
+                background-repeat: repeat no-repeat;
+                // background-size: auto $cover_size;
+                // background-attachment: fixed;
+
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+
+                // text-shadow: 2px 2px #5d4a1f55;
+
+                text-align: end;
+            }
+        }
+
+        .normal-title {
+            flex-grow: 7;
+
+            padding-top: 26.4vh;
+            padding-left: 1.5rem;
+
+            color: hsl(230, 68%, 90%);
+        }
+    }
+
+    .forest {
+        // background-image: url(/assets/pixel_art_forest/Background.png);
+        background-position-y: bottom;
+        background-repeat: repeat no-repeat;
+        background-size: auto $cover_size;
+        background-attachment: fixed;
+    }
+
+    .shoutout{
+        
+        position: absolute;
+        z-index: 3;
+
+        bottom: 50px;
+        right: 50px;
+
+        color: #dadff8;
+
+        line-height: 175%;
+        font-family: "Koulen", sans-serif;
+        font-size: .75rem;
+    }
+}

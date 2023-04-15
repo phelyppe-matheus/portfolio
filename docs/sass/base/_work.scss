@@ -1,0 +1,84 @@
+.work {
+    position: relative;
+    height: 100vh;
+
+    // overflow: hidden;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 10rem);
+    place-items: center;
+    place-content: center;
+
+    gap: 1rem;
+
+    color: hsla(205, 100%, 19%, 1);
+
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 80%;
+        left: 10rem;
+        top: 5rem;
+
+        background:
+            radial-gradient(
+                100.26% 154.72% at 100% 100%,
+                rgba(255, 255, 255, 0.5) 0%,
+                rgba(255, 255, 255, 0) 100%),
+                #EAF6FF;
+        box-shadow: 0px 4px 0px #BCE3FF;
+        border-radius: 100px;
+        filter: opacity(90%);
+    }
+
+    .works-title {
+        position: absolute;
+
+        top: 0;
+        left: 0;
+
+        transform: translate(10%, 0%);
+
+        font-family: 'Koulen', serif;
+        font-size: 10rem;
+        line-height: 100%;
+
+        z-index: 1;
+    }
+
+    .work-card {
+        position: relative;
+        aspect-ratio: 1/1;
+        width: 10rem;
+
+        display: grid;
+
+        border: 4px solid white;
+        border-radius: 15px;
+
+        z-index: 1;
+
+        background:
+            url(/assets/graphic_design/static.png),
+            radial-gradient(100% 100% at 0% 0%,
+                rgba(178, 223, 255, 0.8) 0%,
+                rgba(178, 223, 255, 0.16) 100%
+            );
+        background-blend-mode: overlay, normal;
+
+        .title {
+            margin: auto 0;
+            text-align: center;
+
+            font-family: "Koulen", sans-serif;
+            font-size: 1.6rem;
+        }
+
+        .description {
+            display: none;
+        }
+    }
+
+}
