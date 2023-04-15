@@ -310,7 +310,6 @@ body {
   left: calc(min(50vh, 25vw) - 0.4330127019 * min(50vh, 25vw));
 }
 
-@keyframes needle {}
 .work {
   position: relative;
   height: 100vh;
