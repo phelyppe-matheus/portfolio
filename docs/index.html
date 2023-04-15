@@ -53,6 +53,7 @@
             let scale = scaledLetterWidth/letterWidth;
 
             endLoadingAnimation = async () => {
+                cv.style.transformOrigin = "0% 0%";
                 cv.animate(
                     [
                         {scale: '1'},
@@ -74,8 +75,8 @@
                     "position": "fixed",
                     "height": h,
                     "width": h,
-                    "inset": '0 auto auto 0',
-                    "transform": "translate(-50%, -50%) translate(50vw, 50vh)",
+                    "inset": '50% 50%',
+                    "transform": "translate(-50%, -50%)",
                     "zIndex": '2'
                 });
                 document.body.appendChild(cv);
