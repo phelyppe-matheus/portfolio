@@ -38,6 +38,24 @@ $cover_size: 130vh;
     background-position: 50% 50%;
     background-attachment: fixed;
 
+    &::after {
+        content: "";
+        position: absolute;
+        display: block;
+
+        height: 100%;
+        width: 100%;
+        top: 0;
+
+        background:
+            linear-gradient(
+                0deg,
+                hsl(230, 84%, 22%),
+                hsl(230, 0%, 0%, 0%) 30%,
+            )
+        ;
+    }
+
     .header {
         position: absolute;
 
