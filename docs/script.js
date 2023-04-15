@@ -51,7 +51,7 @@ parallaxRefresh = () => {
         const pointZeroElement = parallaxObject.pointZero;
         const pointZeroRect = pointZeroElement.getBoundingClientRect();
         const velocityRate = parallaxObject.rate - 1;
-        var positionOffset = objectRect.height * parallaxObject.offset;
+        const positionOffset = objectRect.height * parallaxObject.offset;
         const styleElement = parallaxObject.scrollBoundStyleElement;
         const unit = parallaxObject.unit;
 
@@ -65,7 +65,6 @@ parallaxRefresh = () => {
             return;
         }
 
-        objectElement.style.transition = `${styleElement} 2s ease-in-out`;
         objectElement.style[styleElement] = `${styleValue}${unit}`;
     });
 }
