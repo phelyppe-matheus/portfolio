@@ -1,4 +1,6 @@
-var parallaxObjects = [];
+var parallaxObjects = [
+
+];
 
 var scrollTimeout = 0;
 var scrolling = false;
@@ -110,6 +112,7 @@ const setUpHeaderButtons = () => {
 }
 
 window.onload = () => {
+    endLoading();
 
     scrollListener();
 
