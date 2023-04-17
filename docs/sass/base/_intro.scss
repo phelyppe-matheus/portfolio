@@ -27,6 +27,7 @@ $cover_size: 130vh;
             hsl(230, 100%, 90%) 0deg,
             hsl(230, 100%, 90%) 45deg,
             hsl(230, 100%, 76%) 45deg,
+            hsl(230, 100%, 76%) 190deg,
             hsl(230, 100%, 12%) 315deg,
             hsl(230, 100%, 10%) 315deg,
             hsl(230, 100%, 10%) 360deg
@@ -51,8 +52,18 @@ $cover_size: 130vh;
             linear-gradient(
                 0deg,
                 hsl(230, 84%, 22%),
-                hsl(230, 0%, 0%, 0%) 30%,
-            )
+                hsl(230, 0%, 0%, 0%) 5%,
+            ),
+            linear-gradient(
+                10deg,
+                hsl(230, 84%, 22%),
+                hsl(230, 0%, 0%, 0%) 10%,
+            ),
+            linear-gradient(
+                -10deg,
+                hsl(230, 84%, 22%),
+                hsl(230, 0%, 0%, 0%) 10%,
+            ),
         ;
     }
 
@@ -66,6 +77,8 @@ $cover_size: 130vh;
         width: 100%;
 
         padding: 2rem 4rem;
+
+        z-index: 1;
 
         ul:nth-child(1) {
             margin-right: auto;
@@ -109,17 +122,31 @@ $cover_size: 130vh;
 
                 color: hsl(49, 55%, 66%, 0.5);
                 background-image:
-                    radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
-                    radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+                    radial-gradient(
+                        ellipse farthest-corner at right bottom,
+                        #FEDB37 0%,
+                        #FDB931 8%,
+                        #9f7928 30%,
+                        #8A6E2F 40%, transparent 80%
+                    ),
+                    radial-gradient(
+                        ellipse farthest-corner at left top,
+                        #FFFFFF 0%,
+                        #FFFFAC 8%,
+                        #D1B464 25%,
+                        #5d4a1f 62.5%,
+                        #5d4a1f 100%
+                    );
                 background-position-y: bottom;
                 background-repeat: repeat no-repeat;
                 // background-size: auto $cover_size;
                 // background-attachment: fixed;
 
+                background-clip: text;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
 
-                // text-shadow: 2px 2px #5d4a1f55;
+                -webkit-text-stroke: #FFFFAC55 1px;
 
                 text-align: end;
             }
