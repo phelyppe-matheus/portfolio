@@ -3,34 +3,36 @@
     display: flex;
     flex-direction: column;
 
-    gap: 30rem;
+    gap: 15rem;
 
     .title {
+        --font-size: min(7rem, calc(100vw - 200px));
         font-family: 'Koulen', sans-serif;
         font-weight: 400;
-        font-size: min(15rem, calc(100vw - 200px));
+        font-size: var(--font-size);
         line-height: 325px;
         margin: 0 200px;
 
         color: #003A62;
-        text-shadow: 4px 4px 0px #5B96EE, 10px 10px 0px #FFFFFF;
+        text-shadow: calc(var(--font-size) * 0.02) calc(var(--font-size) * 0.02) 0px #5B96EE, calc(var(--font-size) * 0.05) calc(var(--font-size) * 0.05) 0px #FFFFFF;
 
         z-index: 1;
     }
 
     .experience {
+        --experience-height: 12rem;
         position: relative;
         display: flex;
 
-        height: 30rem;
+        height: var(--experience-height);
 
         &::before {
             content: "";
 
             position: absolute;
 
-            height: 53rem;
-            width: 53rem;
+            height: calc(var(--experience-height) * 1.8);
+            width: calc(var(--experience-height) * 1.8);
 
             top: 0;
 
@@ -48,16 +50,16 @@
 
             z-index: -1;
 
-            margin: 0 -10rem;
+            margin: 0 calc(var(--experience-height) * -0.3);
         }
 
         &::after {
             content: "";
 
-            height: 30rem;
-            width: 4rem;
+            height: var(--experience-height);
+            width: calc(var(--experience-height) * 0.1);
 
-            background-color: #003A62;
+            background-color: hsl(230, 100%, 75%);
         }
 
         &:nth-child(2n+1) {
@@ -72,9 +74,9 @@
 
         .thumb {
             aspect-ratio: 4/3;
-            height: 45rem;
+            height: calc(var(--experience-height) * 1.5);
 
-            transform: translate(0, -15rem);
+            transform: translate(0, calc(var(--experience-height) * -0.5));
 
             -webkit-mask-image: url(/assets/graphic_design/mask_asset.svg);
             mask-image: url(/assets/graphic_design/mask_asset.svg);
@@ -87,14 +89,14 @@
         .text {
             position: relative;
             display: flex;
-            padding: 4rem;
+            padding: calc(var(--experience-height) * 0.1);
 
             flex-direction: column;
 
             gap: 1rem;
 
             font-family: 'Rokkitt', serif;
-            color: #003A62;
+            color: hsl(230, 100%, 85%);
 
             width: 45vw;
 
@@ -109,21 +111,21 @@
                 top: 0;
                 z-index: -1;
 
-                background: #F0F8FF;
-                box-shadow: 16px 24px 39px rgba(141, 204, 248, 0.26);
+                background: hsl(230, 100%, 15%);
+                box-shadow: 16px 24px 0px hsla(230, 100%, 10%, 0.40);
             }
 
             .experience-date {
-                font-size: 1.56rem;
+                font-size: clamp(0.6rem, 1rem, 1.6rem);
                 line-height: 100%;
             }
             .experience-title {
-                font-size: 2.6rem;
+                font-size: clamp(1rem, 1.6rem, 2.6rem);
                 font-weight: 900;
                 line-height: 100%;
             }
             .description {
-                font-size: 1.56rem;
+                font-size: clamp(0.6rem, 1rem, 1.6rem);
                 line-height: 100%;
             }
 
