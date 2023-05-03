@@ -1,14 +1,18 @@
 .contacts {
+    --contacts-unit: 1.6rem;
+
     position: relative;
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
     justify-content: center;
     align-items: center;
-    padding: 70px;
-    gap: 10rem;
+    gap: calc(var(--contacts-unit) * 1);
 
-    margin: 5rem 200px;
-    width: calc(100% - 400px);
+    height: 570px;
+    width: 832px;
+
+    margin: calc(50svh - 285px) calc(50svw - 416px);
+    padding: 50px;
 
     background: #F0F8FF;
     box-shadow: 16px 24px 39px rgba(141, 204, 248, 0.34);
@@ -29,22 +33,21 @@
         .title {
             font-style: normal;
             font-weight: 400;
-            font-size: 4rem;
+            font-size: var(--contacts-unit);
         }
 
         .contact-form {
             display: flex;
             flex-direction: column;
 
-            width: 45rem;
-            font-size: 2.6rem;
+            font-size: calc(var(--contacts-unit) * 0.6);
 
             input, textarea {
                 border: none;
 
-                padding: 2rem 4rem;
+                padding: calc(var(--contacts-unit) * 0.6) calc(var(--contacts-unit) * 1.6);
 
-                font-size: 2rem;
+                font-size: calc(var(--contacts-unit) * 0.6);
 
                 background: #FFFFFF;
                 box-shadow: inset 10px 10px 20px rgba(89, 73, 99, 0.3);
@@ -53,7 +56,7 @@
             }
 
             #message {
-                height: 21rem;
+                height: calc(var(--contacts-unit) * 4);
             }
 
             button {
@@ -61,14 +64,16 @@
                 align-self: center;
                 padding: 1rem 4.3rem;
 
-                width: fit-content;
-
-                font-size: 4.2rem;
+                font-size: calc(var(--contacts-unit) * 0.6);
 
                 color: #ffffff;
                 background: #0B6105;
                 box-shadow: 10px 10px 20px rgba(89, 73, 99, 0.3);
                 border-radius: 7rem;
+            }
+
+            button:active {
+                background: red;
             }
         }
     }
@@ -77,7 +82,7 @@
         align-self: stretch;
         width: 1px;
 
-        background-color: #003A62;
+        background: linear-gradient(transparent, hsl(230, 80, 15), transparent);
 
         top: 0;
     }
@@ -85,15 +90,15 @@
     .secondary_cta {
         display: flex;
         flex-direction: column;
-        gap: 5rem;
+        gap: calc(var(--contacts-unit) * 0.6);
 
         .title {
-            font-size: 2.6rem;
+            font-size: calc(var(--contacts-unit) * 0.6);
         }
 
         .social-medias {
             display: flex;
-            gap: 4rem;
+            justify-content: space-between;
         }
     }
 }
