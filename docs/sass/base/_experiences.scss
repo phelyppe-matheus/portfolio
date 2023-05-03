@@ -1,16 +1,15 @@
 .experiences {
+    --font-size: min(7rem, calc(100vw - 200px));
     position: relative;
-    display: flex;
-    flex-direction: column;
-
-    gap: 15rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 300px);
+    margin: 100px 0;
 
     .title {
-        --font-size: min(7rem, calc(100vw - 200px));
         font-family: 'Koulen', sans-serif;
         font-weight: 400;
         font-size: var(--font-size);
-        line-height: 325px;
         margin: 0 200px;
 
         color: #003A62;
